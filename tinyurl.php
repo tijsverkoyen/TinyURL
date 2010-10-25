@@ -2,13 +2,17 @@
 /**
  * TinyUrl class
  *
- * This source file can be used to communicate with TinyURL.com (http://tinyUrl.com)
+ * This source file can be used to communicate with TinyURL.com (http://tinyurl.com)
  *
  * The class is documented in the file itself. If you find any bugs help me out and report them. Reporting can be done by sending an email to php-tinyurl-bugs[at]verkoyen[dot]eu.
  * If you report a bug, make sure you give me enough information (include your code).
  *
+ * Changelog since 1.0.0
+ * - corrected some documentation
+ * - wrote some explanation for the method-parameters
+ *
  * License
- * Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
+ * Copyright (c) 2009, Tijs Verkoyen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -18,11 +22,11 @@
  *
  * This software is provided by the author "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the author be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
  *
- * @author			Tijs Verkoyen <php-tinyurl@verkoyen.eu>
- * @version			1.0.0
+ * @author		Tijs Verkoyen <php-tinyurl@verkoyen.eu>
+ * @version		1.0.1
  *
- * @copyright		Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
- * @license			BSD License
+ * @copyright	Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
+ * @license		BSD License
  */
 class TinyUrl
 {
@@ -36,7 +40,7 @@ class TinyUrl
 	const API_PORT = 80;
 
 	// current version
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.1';
 
 
 	/**
@@ -63,6 +67,7 @@ class TinyUrl
 	 */
 	public function __construct()
 	{
+		// nothing to do
 	}
 
 
@@ -71,9 +76,7 @@ class TinyUrl
 	 *
 	 * @return	string
 	 * @param	string $url
-	 * @param	array[optiona] $aParameters
-	 * @param	bool[optional] $authenticate
-	 * @param	bool[optional] $usePost
+	 * @param	array[optional] $aParameters
 	 */
 	private function doCall($url, $aParameters = array())
 	{
@@ -157,7 +160,7 @@ class TinyUrl
 
 
 	/**
-	 * Get the timeout
+	 * Get the timeout that will be used
 	 *
 	 * @return	int
 	 */
@@ -168,21 +171,23 @@ class TinyUrl
 
 
 	/**
-	 * Get the useragent
+	 * Get the useragent that will be used. Our version will be prepended to yours.
+	 * It will look like: "PHP Tinyurl/<version> <your-user-agent>"
 	 *
 	 * @return	string
 	 */
 	public function getUserAgent()
 	{
-		return (string) 'PHP Tinyurl/'. self::VERSION .' '. $this->userAgent;
+		return (string) 'PHP TinyUrl/'. self::VERSION .' '. $this->userAgent;
 	}
 
 
 	/**
 	 * Set the timeout
+	 * After this time the request will stop. You should handle any errors triggered by this.
 	 *
 	 * @return	void
-	 * @param	int $seconds
+	 * @param	int $seconds	The timeout in seconds
 	 */
 	public function setTimeOut($seconds)
 	{
@@ -192,10 +197,10 @@ class TinyUrl
 
 	/**
 	 * Set the user-agent for you application
-	 * It will be appended to ours
+	 * It will be appended to ours, the result will look like: "PHP TinyUrl/<version> <your-user-agent>"
 	 *
 	 * @return	void
-	 * @param	string $userAgent
+	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>
 	 */
 	public function setUserAgent($userAgent)
 	{
@@ -208,7 +213,7 @@ class TinyUrl
 	 * Create a TinyUrl
 	 *
 	 * @return	string
-	 * @param	string $url
+	 * @param	string $url	The orginal url that should be shortened
 	 */
 	public function create($url)
 	{
@@ -226,8 +231,8 @@ class TinyUrl
 	/**
 	 * Reverse a TinyUrl into a real url
 	 *
-	 * @return	mixed
-	 * @param	string $url
+	 * @return	mixed	If something fails it will return false, otherwise the orginal url will be returned as a string
+	 * @param	string $url	The short tinyUrl that should be reversed
 	 */
 	public function reverse($url)
 	{
@@ -264,7 +269,7 @@ class TinyUrl
 /**
  * TinyUrl Exception class
  *
- * @author			Tijs Verkoyen <php-tinyurl@verkoyen.eu>
+ * @author		Tijs Verkoyen <php-tinyurl@verkoyen.eu>
  */
 class TinyUrlException extends Exception
 {
